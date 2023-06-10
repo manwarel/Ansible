@@ -1,0 +1,39 @@
+---
+- name: Using loops Practice
+  hosts: ansible_clients 
+  remote_user: ansible
+  vars_files: secret.yml
+  gather_facts: no
+  tasks:
+    - name: Iterating over over some single values
+      ansible.builtin.user:
+       name: "{{item}}"
+       groups: "ansible"
+       shell: "/bin/bash"
+       password: "{{password}}"
+      loop:
+        - user1
+        - user2
+
+    - name: Iterating over a list
+      ansible.builtin.user:
+        name: "{{item.name}}"
+        groups: "{{item.group}}"
+        shell: "/bin/bash" 
+        password: "{{password}}" 
+      loop:
+        - { name: 'user3',group: 'ansible'}
+        - { name: 'user4',group: 'ansible' }
+
+    - name: Iterate over a dictionary
+      ansible.builtin.user:
+        name: "{{item.key}}"
+        groups: "{{item.value}}"
+        password: "{{password}}"
+        shell: "/bin/bash"
+      loop: "{{my_dic | dict2items}}"
+      vars:
+        my_dic:
+          user5: "ansible"
+          user6: "ansible"
+...

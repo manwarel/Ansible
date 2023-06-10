@@ -1,0 +1,23 @@
+---
+- name: Register example
+  hosts: ansible_clients
+  tasks:
+    - name: Register demonistration
+      ansible.builtin.copy:
+        src: ./test/
+        dest: /home/ansible
+        owner: ansible
+        group: ansible
+      register: copy_output
+    - name: Debug
+      ansible.builtin.debug:
+        var: copy_output
+
+- name: Pass Register value to another play
+  hosts: ansible_clients
+  tasks:
+    - name: Check the passed value from first play
+      ansible.builtin.debug:
+        var: copy_output.checksum
+...
+

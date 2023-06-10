@@ -1,0 +1,30 @@
+---
+- name: Install & Start apache
+  hosts: ansible_clients
+  remote_user: root
+  tasks:
+    - name: Install apache
+      ansible.builtin.package
+       name: httpd
+       state: present
+    - name: Start apache service
+      ansible.builtin.service
+       name: httpd
+       enabled: True
+       state: started
+
+- name: Install & Start postgresql
+  hosts: ansible_clients
+  remote_user: ansible
+  tasks:
+    - name: Install postgresql
+      ansible.builtin.package
+       name: postgresql
+       state: present
+    - name: Start postgresql
+      ansible.builtin.service
+       name: postgresql
+       enabled: True
+       state: started
+
+...

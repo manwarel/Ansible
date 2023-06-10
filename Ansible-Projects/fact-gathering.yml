@@ -1,0 +1,12 @@
+---
+- name: Gathering hosts facts
+  hosts: ansible_clients
+  tasks:
+    - name: Gathering facts
+      ansible.builtin.debug:
+        var: ansible_facts
+    - name: using debug to show a message
+      ansible.builtin.debug:
+        msg: >
+          this is the ip {{ansible_facts.default_ipv4.address}}
+...

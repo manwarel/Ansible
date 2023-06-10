@@ -1,0 +1,16 @@
+---
+# to run this playbook that loads a vault file ,you need to give ansible-playbook the option of -ask-vault-pass option to ask you for the password of vault file
+
+- name: Create User profile
+  hosts: ansible_clients
+  remote_user: ansible
+  vars_files:
+    - secret.yml
+  tasks:
+    - name: create new user
+      ansible.builtin.user:
+        name: "{{username}}"
+        password: "{{password}}"
+        home: /home/{{username}}
+...
+

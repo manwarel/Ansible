@@ -1,0 +1,38 @@
+---
+- name: Apache Installation 
+  hosts: all
+  vars:
+    web_package: Toota
+  tasks: 
+    - name: Install apache2
+      ansible.builtin.package:
+        name: apache2
+        state: present
+
+    - name: copy index.html
+      ansible.builtin.copy:
+        src: /home/ansible/ansible-projects/index.html
+        dest: /var/www/html
+        owner: www-data
+        group: www-data 
+    - name: start apache service
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: True  
+    - name: copy directory to home dir
+      ansible.builtin.copy:
+        src:  /home/ansible/ansible-projects/test
+        dest: /home/ansible
+    - name: copy from remote host to remote host
+      ansible.builtin.copy:
+        remote_src: True
+        src: /home/ansible/test
+        dest: /tmp
+    - name: testing varibales
+      ansible.builtin.debug:
+        msg: >
+          this is the package nam {{web_package}} and the service name, {{web_service}}
+...     
+
+
